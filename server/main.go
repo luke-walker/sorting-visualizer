@@ -7,8 +7,16 @@ import (
     "github.com/gin-gonic/gin"
 )
 
+var algorithms = []string{
+    "Bubble Sort",
+}
+
 func setupRouter() *gin.Engine {
     r := gin.Default()
+
+    r.GET("/list", func(c *gin.Context) {
+        c.JSON(200, algorithms)
+    })
 
     return r 
 }
