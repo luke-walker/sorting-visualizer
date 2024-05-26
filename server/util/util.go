@@ -20,3 +20,10 @@ func RandNums(n int) []int {
 
     return res
 }
+
+func AddStep(steps [][]int, step []int) [][]int {
+    copyStep := make([]int, len(step))
+    copy(copyStep, step)
+    steps = append(steps, copyStep)
+    return steps
+}
