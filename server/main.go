@@ -17,6 +17,7 @@ const N_MAX = 512
 
 var algorithms = map[string](func([]int) [][]int){
     "Bubble Sort": algs.BubbleSort,
+    "Insertion Sort": algs.InsertionSort,
 }
 
 func setupRouter() *gin.Engine {
