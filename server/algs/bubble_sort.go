@@ -8,7 +8,7 @@ func BubbleSort(nums []int) [][]int {
     n := len(nums)
 
     var steps [][]int
-    util.AddStep(steps, nums)
+    steps = util.AddStep(steps, nums)
     for n > 1 {
         nextN := 0
 
