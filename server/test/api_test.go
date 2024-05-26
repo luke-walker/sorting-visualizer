@@ -1,11 +1,29 @@
 package test
 
 import (
+    "fmt"
     "net/http"
     "testing"
 )
 
 const URL = "http://127.0.0.1:5680"
+
+func TestSortAPI(t *testing.T) {
+    runTest := func(name string, n int) {
+        res, err := http.Get(fmt.Sprintf("%s/sort/%s/%d", URL, name, n))
+        if err != nil {
+            t.Log("could not connect to the server. is it running?")
+            t.Fatal("error:", err)
+        }
+        if res.StatusCode != 200 {
+            t.Fatal("response status code != 200")
+        }
+    }
+
+    runTest("Bubble Sort", 10)
+    runTest("Bubble Sort", 25)
+    runTest("Bubble Sort", 50)
+}
 
 func TestListAPI(t *testing.T) {
     res, err := http.Get(URL+"/list")
@@ -14,7 +32,7 @@ func TestListAPI(t *testing.T) {
         t.Fatal("error:", err)
     }
     if res.StatusCode != 200 {
-        t.Fatal("Response status code != 200")
+        t.Fatal("response status code != 200")
     }
 
     /* USE TO TEST JSON DATA

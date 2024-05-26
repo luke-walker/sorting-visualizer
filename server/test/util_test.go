@@ -1,7 +1,6 @@
 package test
 
 import (
-    "fmt"
     "testing"
 
     "server/util"
@@ -11,7 +10,7 @@ func TestRandNums(t *testing.T) {
     runTest := func(n int) {
         randNums := util.RandNums(n)
         if len(randNums) != n {
-            t.Error(fmt.Sprintf("randNums length is %d, should be %d", len(randNums), n))
+            t.Errorf("randNums length is %d, should be %d", len(randNums), n)
         }
 
         isRandom := false
@@ -29,4 +28,26 @@ func TestRandNums(t *testing.T) {
     runTest(10)
     runTest(100)
     runTest(500)
+}
+
+func TestAddStep(t *testing.T) {
+    var steps [][]int
+
+    step1 := []int{1,2,3}
+    steps = util.AddStep(steps, step1)
+    if steps[0][0] != step1[0] {
+        t.Fatal("step1 not added")
+    }
+
+    step2 := []int{4,5,6}
+    steps = util.AddStep(steps, step2)
+    if steps[1][0] != step2[0] {
+        t.Fatal("step2 not added")
+    }
+
+    step3 := []int{7,8,9}
+    steps = util.AddStep(steps, step3)
+    if steps[2][0] != step3[0] {
+        t.Fatal("step3 not added")
+    }
 }
