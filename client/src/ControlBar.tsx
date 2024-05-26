@@ -2,10 +2,11 @@ import { useEffect, useState, Dispatch, SetStateAction } from "react"
 import Select from "react-select"
 import { API_URL } from "../config/config"
 
-export default function ControlBar({ setData, setPlaying, setStep, playing, step }: {
+export default function ControlBar({ setData, setPlaying, setStep, controls, playing, step }: {
     setData: Dispatch<SetStateAction<number[][]>>,
     setPlaying: Dispatch<SetStateAction<boolean>>,
     setStep: Dispatch<SetStateAction<number>>,
+    controls: boolean,
     playing: boolean,
     step: number
 }) {
@@ -44,6 +45,14 @@ export default function ControlBar({ setData, setPlaying, setStep, playing, step
     function handleNextClick(): void {
         setStep(step+1);
     }
+    
+    function handlePauseClick(): void {
+        setPlaying(false);
+    }
+
+    function handlePlayClick(): void {
+        setPlaying(true);
+    }
 
     return (
         <div className="control-bar">
@@ -59,21 +68,25 @@ export default function ControlBar({ setData, setPlaying, setStep, playing, step
                     <button onClick={handleSubmitClick}>Submit</button>
                 </div>
             </div>
-            <div className="control-bar-prev">
-                <button onClick={handlePrevClick}>Prev</button>
-            </div>
-            {playing ?
-                <div className="control-bar-play">
-
+            {controls &&
+                <>
+                <div className="control-bar-prev">
+                    <button onClick={handlePrevClick}>Prev</button>
                 </div>
-            :
-                <div className="control-bar-pause">
-
+                {playing ?
+                    <div className="control-bar-pause">
+                        <button onClick={handlePauseClick}>Pause</button>
+                    </div>
+                :
+                    <div className="control-bar-play">
+                        <button onClick={handlePlayClick}>Play</button>
+                    </div>
+                }
+                <div className="control-bar-next">
+                    <button onClick={handleNextClick}>Next</button>
                 </div>
+                </>
             }
-            <div className="control-bar-next">
-                <button onClick={handleNextClick}>Next</button>
-            </div>
         </div>
     );
 }
