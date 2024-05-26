@@ -5,6 +5,7 @@ import (
     "fmt"
     "strconv"
 
+    "github.com/gin-contrib/cors"
     "github.com/gin-gonic/gin"
 
     "server/algs"
@@ -12,7 +13,7 @@ import (
 )
 
 const N_MIN = 10
-const N_MAX = 1024
+const N_MAX = 512
 
 var algorithms = map[string](func([]int) [][]int){
     "Bubble Sort": algs.BubbleSort,
@@ -20,6 +21,10 @@ var algorithms = map[string](func([]int) [][]int){
 
 func setupRouter() *gin.Engine {
     r := gin.Default()
+
+    corsConfig := cors.DefaultConfig()
+    corsConfig.AllowOrigins = []string{"http://127.0.0.1:5173"}
+    r.Use(cors.New(corsConfig))
 
     r.GET("/sort/:alg/:n", func(c *gin.Context) {
         alg := c.Params.ByName("alg")
@@ -29,6 +34,7 @@ func setupRouter() *gin.Engine {
             c.Status(500)
             return
         }
+
         // keep n within defined bounds
         n = min(max(n, N_MIN), N_MAX)
 
@@ -42,6 +48,7 @@ func setupRouter() *gin.Engine {
         for key := range algorithms {
             keys = append(keys, key)
         }
+
         c.JSON(200, keys)
     })
 
