@@ -10,18 +10,15 @@ export default function App() {
     const [sortData, setSortData] = useState<number[][]>([]);
     const [step, setStep] = useState<number>(0);
     const [playing, setPlaying] = useState<boolean>(false);
-    const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
 
-    function lastStep() {
-        if (step > 0) {
-            setStep(step => step - 1);
-        }
+    let intervalId: NodeJS.Timeout;
+
+    function lastStep(): void {
+        setStep(step => Math.max(step - 1, 0));
     }
 
-    function nextStep() {
-        if (step < sortData.length - 1) {
-            setStep(step => step + 1);
-        }
+    function nextStep(): void {
+        setStep(step => Math.min(step + 1, sortData.length - 1));
     }
 
     function handleAlgChange(e: any): void {
@@ -61,7 +58,9 @@ export default function App() {
     }
 
     function handlePlayClick(): void {
-        setPlaying(true);
+        if (step < sortData.length - 1) {
+            setPlaying(true);
+        }
     }
 
     useEffect(() => {
@@ -71,12 +70,27 @@ export default function App() {
     }, []);
 
     useEffect(() => {
+        setStep(0);
+        setPlaying(false);
+    }, [sortData]);
+
+    useEffect(() => {
+        if (step === sortData.length - 1) {
+            setPlaying(false);
+        }
+    }, [step]);
+
+    useEffect(() => {
         clearInterval(intervalId);
 
         if (playing) {
-            setIntervalId(setInterval(() => {
-                nextStep();
-            }, 10));
+            intervalId = setInterval(() => {
+                if (step === sortData.length - 1) {
+                    setPlaying(false);
+                } else {
+                    nextStep();
+                }
+            }, 50);
         }
 
         return () => clearInterval(intervalId);
