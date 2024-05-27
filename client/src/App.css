@@ -1,0 +1,9 @@
+.visualizer {
+    display: flex;
+    transform: scaleY(-1);
+}
+
+.data-bar {
+    width: 10px;
+    background-color: black;
+}
