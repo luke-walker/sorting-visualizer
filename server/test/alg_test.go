@@ -9,6 +9,8 @@ import (
 
 func TestSortAlgs(t *testing.T) {
     runTest := func(name string, fn (func([]int) [][]int)) {
+        t.Logf("Testing %s\n", name)
+
         n := 100
         randNums := util.RandNums(n)
         sortedSteps := fn(randNums)
@@ -34,4 +36,5 @@ func TestSortAlgs(t *testing.T) {
 
     runTest("Bubble Sort", algs.BubbleSort)
     runTest("Insertion Sort", algs.InsertionSort)
+    runTest("Quick Sort", algs.QuickSort)
 }

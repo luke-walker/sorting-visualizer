@@ -3,6 +3,7 @@ package main
 import (
     "flag"
     "fmt"
+    "sort"
     "strconv"
 
     "github.com/gin-contrib/cors"
@@ -18,13 +19,14 @@ const N_MAX = 512
 var algorithms = map[string](func([]int) [][]int){
     "Bubble Sort": algs.BubbleSort,
     "Insertion Sort": algs.InsertionSort,
+    "Quick Sort": algs.QuickSort,
 }
 
 func setupRouter() *gin.Engine {
     r := gin.Default()
 
     corsConfig := cors.DefaultConfig()
-    corsConfig.AllowOrigins = []string{"http://127.0.0.1:5173"}
+    corsConfig.AllowOrigins = []string{"http://127.0.0.1:3000","http://127.0.0.1:5173"}
     r.Use(cors.New(corsConfig))
 
     r.GET("/sort/:alg/:n", func(c *gin.Context) {
@@ -49,6 +51,7 @@ func setupRouter() *gin.Engine {
         for key := range algorithms {
             keys = append(keys, key)
         }
+        sort.Strings(keys)
 
         c.JSON(200, keys)
     })
