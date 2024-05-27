@@ -10,6 +10,7 @@ export default function App() {
     const [sortData, setSortData] = useState<number[][]>([]);
     const [step, setStep] = useState<number>(0);
     const [playing, setPlaying] = useState<boolean>(false);
+    const [timescale, setTimescale] = useState<number>(1.0);
 
     let intervalId: NodeJS.Timeout;
 
@@ -63,6 +64,10 @@ export default function App() {
         }
     }
 
+    function handleTimescaleChange(e: any): void {
+        setTimescale(parseFloat(e.target.value));
+    }
+
     useEffect(() => {
         fetch(`${API_URL}/list`)
             .then(res => res.json())
@@ -72,10 +77,11 @@ export default function App() {
     useEffect(() => {
         setStep(0);
         setPlaying(false);
+        setTimescale(1.0);
     }, [sortData]);
 
     useEffect(() => {
-        if (step === sortData.length - 1) {
+        if (step === sortData.length - 1) { // are both of these necessary?
             setPlaying(false);
         }
     }, [step]);
@@ -83,18 +89,20 @@ export default function App() {
     useEffect(() => {
         clearInterval(intervalId);
 
-        if (playing) {
-            intervalId = setInterval(() => {
-                if (step === sortData.length - 1) {
-                    setPlaying(false);
-                } else {
-                    nextStep();
-                }
-            }, 50);
+        if (!playing) {
+            return;
         }
 
+        intervalId = setInterval(() => {
+            if (step === sortData.length - 1) { // ^^^^^^^^^^^^^^
+                setPlaying(false);
+            } else {
+                nextStep();
+            }
+        }, 50 / timescale);
+
         return () => clearInterval(intervalId);
-    }, [playing]);
+    }, [playing, timescale]);
 
     return (
         <div className="app">
@@ -116,23 +124,29 @@ export default function App() {
                     <button onClick={handleSubmitClick}>Submit</button>
                 </div>
             </div>
-            <div className="control-bar">
-                <div className="control-bar-prev">
-                    <button onClick={handlePrevClick}>Prev</button>
-                </div>
-                {playing ?
-                    <div className="control-bar-pause">
-                        <button onClick={handlePauseClick}>Pause</button>
+            {sortData.length > 0 &&
+                <div className="control-bar">
+                    <div className="control-bar-prev">
+                        <button onClick={handlePrevClick}>Prev</button>
                     </div>
-                :
-                    <div className="control-bar-play">
-                        <button onClick={handlePlayClick}>Play</button>
+                    {playing ?
+                        <div className="control-bar-pause">
+                            <button onClick={handlePauseClick}>Pause</button>
+                        </div>
+                    :
+                        <div className="control-bar-play">
+                            <button onClick={handlePlayClick}>Play</button>
+                        </div>
+                    }
+                    <div className="control-bar-next">
+                        <button onClick={handleNextClick}>Next</button>
                     </div>
-                }
-                <div className="control-bar-next">
-                    <button onClick={handleNextClick}>Next</button>
+                    <div className="control-bar-timescale">
+                        <input type="range" min="0.05" max="10.0" step="0.05" value={timescale} onChange={handleTimescaleChange} />
+                        <p>Timescale: {timescale}x</p>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     );
 }
