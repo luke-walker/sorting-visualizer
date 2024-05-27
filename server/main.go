@@ -16,7 +16,7 @@ import (
 const N_MIN = 10
 const N_MAX = 512
 
-var algorithms = map[string](func([]int) [][]int){
+var algorithms = map[string](func([]uint16) [][]uint16){
     "Bubble Sort": algs.BubbleSort,
     "Insertion Sort": algs.InsertionSort,
     "Quick Sort": algs.QuickSort,
@@ -41,7 +41,7 @@ func setupRouter() *gin.Engine {
         // keep n within defined bounds
         n = min(max(n, N_MIN), N_MAX)
 
-        randNums := util.RandNums(n)
+        randNums := util.RandNums(uint16(n))
         steps := algorithms[alg](randNums)
         c.JSON(200, steps)
     })

@@ -7,9 +7,9 @@ import (
 )
 
 func TestRandNums(t *testing.T) {
-    runTest := func(n int) {
+    runTest := func(n uint16) {
         randNums := util.RandNums(n)
-        if len(randNums) != n {
+        if uint16(len(randNums)) != n {
             t.Errorf("randNums length is %d, should be %d", len(randNums), n)
         }
 
@@ -31,21 +31,21 @@ func TestRandNums(t *testing.T) {
 }
 
 func TestAddStep(t *testing.T) {
-    var steps [][]int
+    var steps [][]uint16
 
-    step1 := []int{1,2,3}
+    step1 := []uint16{1,2,3}
     steps = util.AddStep(steps, step1)
     if steps[0][0] != step1[0] {
         t.Fatal("step1 not added")
     }
 
-    step2 := []int{4,5,6}
+    step2 := []uint16{4,5,6}
     steps = util.AddStep(steps, step2)
     if steps[1][0] != step2[0] {
         t.Fatal("step2 not added")
     }
 
-    step3 := []int{7,8,9}
+    step3 := []uint16{7,8,9}
     steps = util.AddStep(steps, step3)
     if steps[2][0] != step3[0] {
         t.Fatal("step3 not added")

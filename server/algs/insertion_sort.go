@@ -6,10 +6,10 @@ import (
 
 // Time Complexity: O(n^2)
 // Auxiliary Space: O(1)
-func InsertionSort(nums []int) [][]int {
+func InsertionSort(nums []uint16) [][]uint16 {
     n := len(nums)
 
-    var steps [][]int
+    var steps [][]uint16
     steps = util.AddStep(steps, nums)
 
     for i := 1; i < n; i++ {
