@@ -109,6 +109,7 @@ export default function App() {
                 <div className="algorithm-form">
                     <div className="algorithm-select">
                         <select value={alg} onChange={handleAlgChange}>
+                            <option hidden>Select Algorithm</option>
                             {algList.map(x => (
                                 <option key={x} value={x}>{x}</option>
                             ))}
