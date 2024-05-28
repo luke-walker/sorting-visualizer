@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import Select from "react-select"
 import { API_URL } from "../config/config"
 import "./App.css"
 
@@ -23,7 +22,7 @@ export default function App() {
     }
 
     function handleAlgChange(e: any): void {
-        setAlg(e.value);
+        setAlg(e.target.value);
     }
 
     function handleNChange(e: any): void {
@@ -106,16 +105,13 @@ export default function App() {
 
     return (
         <div className="app">
-            <div className="visualizer">
-                {sortData.length > 0 && step < sortData.length &&
-                    sortData[step].map(num => (
-                        <div className="data-bar" key={num} style={{height: num}} />
-                    )
-                )}
-            </div>
             <div className="algorithm-form">
                 <div className="algorithm-select">
-                    <Select placeholder="Select algorithm" options={algList.map(x => ({value: x, label: x}))} onChange={handleAlgChange} />
+                    <select value={alg} onChange={handleAlgChange}>
+                        {algList.map(x => (
+                            <option key={x} value={x}>{x}</option>
+                        ))}
+                    </select>
                 </div>
                 <div className="algorithm-n">
                     <input type="text" placeholder="n" value={n} onChange={handleNChange} />
@@ -147,6 +143,13 @@ export default function App() {
                     </div>
                 </div>
             }
+            <div className="visualizer">
+                {sortData.length > 0 && step < sortData.length &&
+                    sortData[step].map(num => (
+                        <div className="data-bar" key={num} style={{height: num}} />
+                    )
+                )}
+            </div>
         </div>
     );
 }
