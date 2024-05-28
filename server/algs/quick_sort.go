@@ -6,12 +6,12 @@ import (
 
 // Time Complexity: O(n^2)
 // Auxiliary Space: O(log n)
-func QuickSort(nums []uint16) [][]uint16 {
-    var steps [][]uint16
+func QuickSort(nums []int) [][]int {
+    var steps [][]int
     steps = util.AddStep(steps, nums)
 
     // Hoare's partition
-    partition := func(arr []uint16, low int, high int) int {
+    partition := func(arr []int, low int, high int) int {
         pivot := arr[low]
         i := low - 1
         j := high + 1
@@ -27,8 +27,8 @@ func QuickSort(nums []uint16) [][]uint16 {
         }
     }
 
-    var quickSort func([]uint16, int, int)
-    quickSort = func(arr []uint16, low int, high int) {
+    var quickSort func([]int, int, int)
+    quickSort = func(arr []int, low int, high int) {
         if low >= 0 && high >= 0 && low < high {
             p := partition(arr, low, high)
 
