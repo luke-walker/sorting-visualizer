@@ -105,44 +105,46 @@ export default function App() {
 
     return (
         <div className="app">
-            <div className="algorithm-form">
-                <div className="algorithm-select">
-                    <select value={alg} onChange={handleAlgChange}>
-                        {algList.map(x => (
-                            <option key={x} value={x}>{x}</option>
-                        ))}
-                    </select>
+            <div className="top-container">
+                <div className="algorithm-form">
+                    <div className="algorithm-select">
+                        <select value={alg} onChange={handleAlgChange}>
+                            {algList.map(x => (
+                                <option key={x} value={x}>{x}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="algorithm-n">
+                        <input type="text" placeholder="n" value={n} onChange={handleNChange} />
+                    </div>
+                    <div className="algorithm-submit">
+                        <button onClick={handleSubmitClick}>Submit</button>
+                    </div>
                 </div>
-                <div className="algorithm-n">
-                    <input type="text" placeholder="n" value={n} onChange={handleNChange} />
-                </div>
-                <div className="algorithm-submit">
-                    <button onClick={handleSubmitClick}>Submit</button>
-                </div>
+                {sortData.length > 0 &&
+                    <div className="control-bar">
+                        <div className="control-bar-prev">
+                            <button onClick={handlePrevClick}>Prev</button>
+                        </div>
+                        {playing ?
+                            <div className="control-bar-pause">
+                                <button onClick={handlePauseClick}>Pause</button>
+                            </div>
+                        :
+                            <div className="control-bar-play">
+                                <button onClick={handlePlayClick}>Play</button>
+                            </div>
+                        }
+                        <div className="control-bar-next">
+                            <button onClick={handleNextClick}>Next</button>
+                        </div>
+                        <div className="control-bar-timescale">
+                            <input type="range" min="0.05" max="10.0" step="0.05" value={timescale} onChange={handleTimescaleChange} />
+                            <p>Timescale: {timescale}x</p>
+                        </div>
+                    </div>
+                }
             </div>
-            {sortData.length > 0 &&
-                <div className="control-bar">
-                    <div className="control-bar-prev">
-                        <button onClick={handlePrevClick}>Prev</button>
-                    </div>
-                    {playing ?
-                        <div className="control-bar-pause">
-                            <button onClick={handlePauseClick}>Pause</button>
-                        </div>
-                    :
-                        <div className="control-bar-play">
-                            <button onClick={handlePlayClick}>Play</button>
-                        </div>
-                    }
-                    <div className="control-bar-next">
-                        <button onClick={handleNextClick}>Next</button>
-                    </div>
-                    <div className="control-bar-timescale">
-                        <input type="range" min="0.05" max="10.0" step="0.05" value={timescale} onChange={handleTimescaleChange} />
-                        <p>Timescale: {timescale}x</p>
-                    </div>
-                </div>
-            }
             <div className="visualizer">
                 {sortData.length > 0 && step < sortData.length &&
                     sortData[step].map(num => (

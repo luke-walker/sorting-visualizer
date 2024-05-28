@@ -1,3 +1,16 @@
+.top-container {
+    display: flex;
+}
+
+.algorithm-form {
+    display: flex;
+}
+
+.control-bar {
+    display: flex;
+    margin-left: auto;
+}
+
 .visualizer {
     display: flex;
     transform: scaleY(-1);
