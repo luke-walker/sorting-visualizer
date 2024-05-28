@@ -20,6 +20,7 @@ var algorithms = map[string](func([]int) [][]int){
     "Bubble Sort": algs.BubbleSort,
     "Insertion Sort": algs.InsertionSort,
     "Quick Sort": algs.QuickSort,
+    "Selection Sort": algs.SelectionSort,
 }
 
 func setupRouter() *gin.Engine {

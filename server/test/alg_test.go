@@ -37,4 +37,5 @@ func TestSortAlgs(t *testing.T) {
     runTest("Bubble Sort", algs.BubbleSort)
     runTest("Insertion Sort", algs.InsertionSort)
     runTest("Quick Sort", algs.QuickSort)
+    runTest("Selection Sort", algs.SelectionSort)
 }

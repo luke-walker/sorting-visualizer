@@ -23,6 +23,7 @@ func TestSortAPI(t *testing.T) {
     runTest("Bubble Sort", 50)
     runTest("Insertion Sort", 50)
     runTest("Quick Sort", 50)
+    runTest("Selection Sort", 50)
 }
 
 func TestListAPI(t *testing.T) {
